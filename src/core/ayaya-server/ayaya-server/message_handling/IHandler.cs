@@ -5,7 +5,7 @@ namespace ayaya_server.message_handling
 {
     public interface IHandler
     {
-        void HandleMessage(Packet data);
+        Response HandleMessage(Packet data);
     }
 
     [AttributeUsage(AttributeTargets.Class)]

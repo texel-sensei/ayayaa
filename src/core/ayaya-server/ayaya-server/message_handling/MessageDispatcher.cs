@@ -9,12 +9,25 @@ namespace ayaya_server.message_handling
     public class MessageDispatcher
     {
         private readonly Dictionary<string, Type> _messageHandlers = new Dictionary<string, Type>();
-        
-        public void HandleMessage(Packet packet)
+
+        private Type _defaultHandler = typeof(UnknowCommandHandler);
+        public Type DefaultHandler
+        {
+            get => _defaultHandler;
+            set
+            {
+                if (value == null) throw new ArgumentNullException(nameof(value));
+                if (!value.GetInterfaces().Contains(typeof(IHandler)))
+                    throw new ArgumentException("Message handler must implement IHandler!");
+                _defaultHandler = value;
+            }
+        }
+
+        public Response HandleMessage(Packet packet)
         {
             var cmd = packet.Command;
             var handler = GetMessageHandler(cmd);
-            handler.HandleMessage(packet);
+            return handler.HandleMessage(packet);
         }
 
         public void RegisterMessageHandler<T>() where T: IHandler
@@ -26,7 +39,7 @@ namespace ayaya_server.message_handling
         {
             if (handler == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException();
             }
             if (!typeof(IHandler).IsAssignableFrom(handler))
             {
@@ -52,9 +65,15 @@ namespace ayaya_server.message_handling
             _messageHandlers[handlerAttribute.Command] = handler;
         }
 
+        private IHandler BuildMessageHandler(Type t)
+        {
+            return t.GetConstructor(new Type[0]).Invoke(new object[0]) as IHandler;
+        }
+
         private IHandler GetMessageHandler(string cmd)
         {
-            return _messageHandlers[cmd].GetConstructor(new Type[0]).Invoke(new object[0]) as IHandler;
+            var type = _messageHandlers.GetValueOrDefault(cmd, DefaultHandler);
+            return BuildMessageHandler(type);
         }
     }
 }
