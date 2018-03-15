@@ -6,7 +6,7 @@ namespace ayaya_server.message_handling
     public class Packet
     {
         public string Command;
-        public readonly Dictionary<string, string> Data = new Dictionary<string, string>();
+        public dynamic Data;
     }
 
     public enum ResponseCode
@@ -20,5 +20,6 @@ namespace ayaya_server.message_handling
     {
         public ResponseCode Code;
         public string CodeText;
+        public dynamic Data;
     }
 }
