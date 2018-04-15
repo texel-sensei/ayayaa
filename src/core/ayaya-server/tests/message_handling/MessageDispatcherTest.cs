@@ -21,7 +21,7 @@ namespace tests.message_handling
     }
     
     
-    public class MessageDispatcherTest
+    public class FileStorageTest
     {
         private readonly MessageDispatcher _dispatcher = new MessageDispatcher();
         
@@ -67,7 +67,7 @@ namespace tests.message_handling
         public void TestHandlerChange()
         {
             Assert.ThrowsAny<ArgumentException>(()=> _dispatcher.DefaultHandler = null);
-            Assert.ThrowsAny<ArgumentException>(() => _dispatcher.DefaultHandler = typeof(MessageDispatcherTest));
+            Assert.ThrowsAny<ArgumentException>(() => _dispatcher.DefaultHandler = typeof(FileStorageTest));
             _dispatcher.DefaultHandler = typeof(WorkingHandler);
         }
     }
