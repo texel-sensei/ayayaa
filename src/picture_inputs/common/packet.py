@@ -17,6 +17,7 @@ def dict_property(name: str, *, read_only=False):
 
 
 class Packet:
+    command = dict_property('command')
     tags = dict_property('tags', read_only=True)
     image = dict_property('image')
     filename = dict_property('filename')
@@ -28,12 +29,14 @@ class Packet:
         with open(path, 'rb') as image:
             self.image = image.read()
         self.filename = os.path.basename(path)
+        self.command = 'upload_image'
 
     def serialize(self) -> str:
         copy = {k: v for (k, v) in self.data.items() if k != "image"}
 
-        data = gzip.compress(self.image)
-        copy['image'] = str(base64.b64encode(data), 'utf-8')
+        if 'image' in self.data:
+            data = gzip.compress(self.image)
+            copy['image'] = str(base64.b64encode(data), 'utf-8')
 
         return json.dumps(copy)
 
