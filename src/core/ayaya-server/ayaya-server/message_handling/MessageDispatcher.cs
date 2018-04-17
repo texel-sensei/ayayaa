@@ -67,7 +67,7 @@ namespace ayaya_server.message_handling
 
         private IHandler BuildMessageHandler(Type t)
         {
-            return t.GetConstructor(new Type[0]).Invoke(new object[0]) as IHandler;
+            return t.GetConstructor(Type.EmptyTypes).Invoke(new object[0]) as IHandler;
         }
 
         private IHandler GetMessageHandler(string cmd)
