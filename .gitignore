@@ -1,5 +1,10 @@
 # Keep some dotfiles
 !.releaserc
+!.travis.yml
+
+# ignore csproj.user files
+*.csproj.user
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,0 +1,15 @@
+language: csharp
+solution: src/core/ayaya-server/ayaya-server.sln
+mono: none
+dotnet: 2.0.0
+
+script:
+    - dotnet restore $TRAVIS_SOLUTION
+    - dotnet test $TRAVIS_SOLUTION
+
+deploy:
+    provider: script
+    skip_cleanup: true
+    script:
+        - nvm install lts/*
+        - npx travis-deply-once "npx semantic-release"

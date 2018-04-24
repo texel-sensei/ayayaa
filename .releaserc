@@ -4,14 +4,15 @@
   "prepare": [
     {
       "path": "@semantic-release/exec",
-      "cmd": "set-version ${nextRelease.version}"
+      "cmd": "./create_release.sh ${nextRelease.version}"
     }
   ],
   "publish": [
-    "@semantic-release/github",
     {
-      "path": "@semantic-release/exec",
-      "cmd": "publish-package"
+      "path": "@semantic-release/github",
+	  "assets": {
+		"path": "ayayaa-server-*.zip"
+	  }
     }
   ],
 }
