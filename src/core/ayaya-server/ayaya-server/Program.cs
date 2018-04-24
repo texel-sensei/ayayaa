@@ -30,15 +30,23 @@ namespace ayaya_server
                 var response = dispatcher.HandleMessage(inPacket);
 
                 var json = JsonConvert.SerializeObject(response);
-                Debug.WriteLine(json);
+                Console.WriteLine(json);
                 con.Send(json);
             }
         }
 
         static void Main(string[] args)
         {
+            Console.WriteLine("ayayaa-server starting...");
             var connection = new ZeroMQConnection();
-            Storage = new FileStorage(new DiskFileSystem(), "T:\\images");
+
+            var path = "./images";
+            if (args.Length == 1)
+            {
+                path = args[0];
+            }
+
+            Storage = new FileStorage(new DiskFileSystem(), path);
             new Program().DoLoop(connection);
         }
     }
