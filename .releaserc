@@ -1,5 +1,5 @@
 {
-  "repositoryUrl": "https://github.com/texel-sensei/ayayaa",
+  "repositoryUrl": "https://github.com/texel-sensei/ayayaa.git",
   "verifyConditions": ["@semantic-release/github"],
   "prepare": [
     {
