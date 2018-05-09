@@ -2,8 +2,8 @@
 VERSION="$1"
 echo $VERSION
 
-SRC_FOLDER=src/core/ayaya-server/
-PROJECT=$SRC_FOLDER/ayaya-server/ayaya-server.csproj
+SRC_FOLDER=src/core/ayayaa-server/
+PROJECT=$SRC_FOLDER/ayayaa-server/ayayaa-server.csproj
 
 FOLDER_NAME="ayayaa-server-$VERSION"
 RELEASE_FOLDER=$(pwd)/$FOLDER_NAME
@@ -17,7 +17,7 @@ fi
 
 
 RUN_SCRIPT="$RELEASE_FOLDER/run.sh"
-echo "dotnet ayaya-server.dll" > "$RUN_SCRIPT"
+echo "dotnet ayayaa-server.dll" > "$RUN_SCRIPT"
 chmod +x "$RUN_SCRIPT"
 
 cp "$RUN_SCRIPT" "$RELEASE_FOLDER/run.bat"

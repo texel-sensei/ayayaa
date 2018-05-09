@@ -4,9 +4,9 @@ using System.IO;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography;
 using System.Text;
-using ayaya_server.utils;
+using ayayaa.utils;
 
-namespace ayaya_server.file_storage
+namespace ayayaa.file_storage
 {
     public class FileStorage
     {

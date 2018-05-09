@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ayaya-server", "ayaya-server\ayaya-server.csproj", "{88F1ED58-3025-4827-94C3-F98383729E20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ayayaa-server", "ayayaa-server\ayayaa-server.csproj", "{88F1ED58-3025-4827-94C3-F98383729E20}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{F185EB40-9DAE-4D71-8BBD-9273EDD38508}"
 EndProject

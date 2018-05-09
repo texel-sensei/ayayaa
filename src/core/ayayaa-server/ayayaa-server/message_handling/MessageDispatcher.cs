@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace ayaya_server.message_handling
+namespace ayayaa.message_handling
 {
     
     public class MessageDispatcher

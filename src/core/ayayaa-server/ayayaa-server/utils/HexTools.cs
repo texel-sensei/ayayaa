@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ayaya_server.utils
+namespace ayayaa.utils
 {
     internal static class HexTools
     {

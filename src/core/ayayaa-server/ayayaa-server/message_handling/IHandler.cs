@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 
-namespace ayaya_server.message_handling
+namespace ayayaa.message_handling
 {
     public interface IHandler
     {

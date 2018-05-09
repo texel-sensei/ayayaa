@@ -1,6 +1,6 @@
 using System;
 using Xunit;
-using ayaya_server.message_handling;
+using ayayaa.message_handling;
 
 namespace tests.message_handling
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace ayaya_server.file_storage
+namespace ayayaa.file_storage
 {
     public interface IFileSystem
     {

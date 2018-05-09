@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace ayaya_server.message_handling
+namespace ayayaa.message_handling
 {
     public class UnknowCommandHandler : IHandler
     {

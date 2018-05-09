@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using ayayaa.connection;
-using ayaya_server.file_storage;
-using ayaya_server.message_handling;
-using ayaya_server.message_handling.Handlers;
+using ayayaa.file_storage;
+using ayayaa.message_handling;
+using ayayaa.message_handling.Handlers;
 using Newtonsoft.Json;
 
-namespace ayaya_server
+namespace ayayaa
 {
     class Program
     {

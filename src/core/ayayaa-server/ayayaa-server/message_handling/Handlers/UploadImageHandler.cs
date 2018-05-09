@@ -5,9 +5,9 @@ using System.IO.Compression;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
-using ayaya_server.file_storage;
+using ayayaa.file_storage;
 
-namespace ayaya_server.message_handling.Handlers
+namespace ayayaa.message_handling.Handlers
 {
     [Handler("upload_image")]
     class UploadImageHandler : IHandler
