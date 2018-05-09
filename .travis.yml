@@ -4,6 +4,10 @@ solution: src/core/ayaya-server/ayaya-server.sln
 mono: none
 dotnet: 2.0.0
 
+branches:
+    except:
+        - /v[0-9]+\.[0-9]+\.[0-9]+/
+
 script:
     - dotnet restore $TRAVIS_SOLUTION
     - dotnet test $TRAVIS_SOLUTION
