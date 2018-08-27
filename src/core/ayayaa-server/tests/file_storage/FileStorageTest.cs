@@ -91,8 +91,16 @@ namespace tests.file_storage
             Assert.True(tested.Exists(hash));
             Assert.False(tested.Exists(hash, ".dat"));
 
+            // GIVEN a .txt file in storage
             var hash2 = tested.StoreData(new byte[] {65, 66, 67}, ".txt");
+
+            // THEN the file with .txt exists
             Assert.True(tested.Exists(hash2, ".txt"));
+
+            // THEN the file with extension txt (without dot) exists
+            Assert.True(tested.Exists(hash2, "txt"));
+
+            // THEN the file with .dat extension does not exist
             Assert.False(tested.Exists(hash2, ".dat"));
             Assert.False(tested.Exists(hash2));
 

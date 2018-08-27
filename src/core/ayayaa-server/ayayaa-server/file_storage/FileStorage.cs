@@ -55,6 +55,12 @@ namespace ayayaa.file_storage
         public byte[] LoadData(string hash, string extension = null)
         {
             var path = BuildPath(hash, extension);
+            if (!Exists(hash, extension))
+            {
+                throw new KeyNotFoundException(
+                    $"Can't find hash {hash} with file extension {extension}"
+                );
+            }
             using (var stream = _storage.Open(path))
             {
                 var length = stream.Length;
@@ -89,6 +95,10 @@ namespace ayayaa.file_storage
             var filename = hash;
             if (extension != null)
             {
+                if (!extension.StartsWith('.'))
+                {
+                    extension = '.' + extension;
+                }
                 filename += extension;
             }
             return Path.Combine(_basePath, prefix, filename);
