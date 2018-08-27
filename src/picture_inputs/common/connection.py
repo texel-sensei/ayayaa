@@ -1,5 +1,4 @@
-import zmq
-import zmq.asyncio
+import aiohttp
 from packet import Packet
 
 
@@ -10,36 +9,23 @@ class CommunicationError(RuntimeError):
 class Connection:
     def __init__(self, context=None):
         self.timeout = 1000
-        self.context = context or zmq.asyncio.Context.instance()
-        self.socket = self.context.socket(zmq.REQ)
         self.connected = False
         self.endpoint: str = None
+        self._url: str = None
 
     async def connect(self, ip: str, port: int):
-        self.endpoint = "tcp://{}:{}".format(ip, port)
-        self.socket.connect(self.endpoint)
+        self._url = f"http://{ip}:{port}/api/"
         self.connected = True
 
     def disconnect(self):
         self.connected = False
-        self.socket.disconnect(self.endpoint)
 
     async def send_packet(self, packet: Packet) -> Packet:
         if not self.connected:
             raise RuntimeError("No connection to server!")
-        can_send = await self.socket.poll(self.timeout, flags=zmq.POLLOUT)
-        if can_send & zmq.POLLOUT:
+        async with aiohttp.ClientSession() as session:
             text = bytes(packet.serialize(), "utf-8")
-            await self.socket.send(text)
-        else:
-            self.disconnect()
-            raise CommunicationError("Connection timed out")
+            async with session.post(self._url, data=text) as response:
+                response_text = await response.text()
 
-        can_receive = await self.socket.poll(self.timeout, flags=zmq.POLLIN)
-        print(can_receive)
-        if can_receive & zmq.POLLIN:
-            response_text = await self.socket.recv()
-        else:
-            self.disconnect()
-            raise CommunicationError("Connection timed out")
         return Packet.deserialize(response_text)

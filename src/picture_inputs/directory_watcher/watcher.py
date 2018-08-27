@@ -47,7 +47,7 @@ class InputWatcher(PatternMatchingEventHandler):
                 return
             if not self.server.connected:
                 print("Connect to server")
-                await self.server.connect("127.0.0.1", 1338)
+                await self.server.connect("localhost", 1338)
             print("Send request")
             try:
                 response = await self.server.send_packet(packet)

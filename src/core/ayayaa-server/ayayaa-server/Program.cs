@@ -17,29 +17,19 @@ namespace ayayaa
         {
             var dispatcher = new MessageDispatcher();
             dispatcher.RegisterMessageHandler<UploadImageHandler>();
+
+            con.SetConnectionHandler(request => dispatcher.HandleMessage(request));
+
             con.Bind(1338);
 
-            while(true) {
-                var rawData = con.Receive();
-                var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(rawData);
-                var inPacket = new Packet()
-                {
-                    Command = dict["command"],
-                    Data = dict
-                };
-                var response = dispatcher.HandleMessage(inPacket);
-
-                var json = JsonConvert.SerializeObject(response);
-                Console.WriteLine(json);
-                con.Send(json);
-            }
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadLine(); // Wait until stop
         }
 
         static void Main(string[] args)
         {
-            Console.WriteLine("ayayaa-server starting...");
-            var connection = new ZeroMQConnection();
 
+            Console.WriteLine("ayayaa-server starting...");
             var path = "./images";
             if (args.Length == 1)
             {
@@ -47,7 +37,11 @@ namespace ayayaa
             }
 
             Storage = new FileStorage(new DiskFileSystem(), path);
-            new Program().DoLoop(connection);
+            using (var connection = new NancyConnection())
+            {
+                NancyConnection.Storage = Storage;
+                new Program().DoLoop(connection);
+            }
         }
     }
 }

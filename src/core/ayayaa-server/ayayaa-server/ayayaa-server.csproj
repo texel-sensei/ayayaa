@@ -5,7 +5,8 @@
     <RootNamespace>ayayaa</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Nancy" Version="2.0.0-pre1911" />
+    <PackageReference Include="Nancy.Hosting.Self" Version="2.0.0-pre1911" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
-    <PackageReference Include="ZeroMQ" Version="4.1.0.26" />
   </ItemGroup>
 </Project>

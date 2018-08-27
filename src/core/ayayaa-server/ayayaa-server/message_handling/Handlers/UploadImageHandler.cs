@@ -16,6 +16,7 @@ namespace ayayaa.message_handling.Handlers
 
         public Response HandleMessage(Packet data)
         {
+            Console.WriteLine($"Store image request for :{data.Data["filename"]}");
             var imageData = DecodeImage(data.Data["image"]);
             var extension = Path.GetExtension(data.Data["filename"]);
             var hash = _storage.StoreData(imageData, extension);
@@ -25,7 +26,12 @@ namespace ayayaa.message_handling.Handlers
                 return new Response()
                 {
                     Code = ResponseCode.Ok,
-                    CodeText = "ImageStorageSuccess"
+                    CodeText = "ImageStorageSuccess",
+                    Data = new Dictionary<string, string>
+                    {
+                        {"hash", hash},
+                        {"file_extension", extension}
+                    }
                 };
             }
             else
