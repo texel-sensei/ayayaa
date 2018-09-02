@@ -9,32 +9,63 @@ namespace ayayaa.logging
 {
     public class Logger : ILogger
     {
-        public Logger(IWriter writer, LogPriority minPriority)
+        public Logger()
         {
-            Writer = writer;
-            MinimumPriority = minPriority;
+            Writers = new Dictionary<IWriter, LogPriority>();
         }
 
-        public IWriter Writer { get; }
-        public LogPriority MinimumPriority { get; }
+        public Dictionary<IWriter, LogPriority> Writers { get; }
 
         /// <summary>
-        /// Writes the given message into the log. If the given priority is lower than the minimum priority of this logger, the message won't be logged and
-        /// the function returns false.
+        /// Writes the given message to the given log. This function does not check minimum priority of the given log.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="priority"></param>
+        /// <param name="log"></param>
+        /// <returns></returns>
+        public void WriteToLog(string message, LogPriority priority, IWriter log)
+        {
+            string fMessage = FormatEntry(message, priority);
+            log.WriteMessage(fMessage);
+        }
+
+        /// <summary>
+        /// Writes the given message into the logs. If the given priority is lower than the minimum priority of the log, 
+        /// the message won't be written. The return value contains the success for each log.
         /// </summary>
         /// <param name="message"></param>
         /// <param name="priority"></param>
         /// <returns></returns>
-        public bool WriteToLog(string message, LogPriority priority)
+        public Dictionary<IWriter, bool> WriteToLogs(string message, LogPriority priority)
         {
-            // No need to bother logging unimportant infos.
-            if (priority < MinimumPriority)
-                return false;
-
+            Dictionary<IWriter, bool> results = new Dictionary<IWriter, bool>();
             string fMessage = FormatEntry(message, priority);
-            Writer.WriteMessage(fMessage);
 
-            return true;
+            foreach (IWriter writer in Writers.Keys) 
+            {
+                if (priority >= Writers[writer])
+                {
+                    writer.WriteMessage(fMessage);
+                    results.Add(writer, true);
+                }
+                else
+                {
+                    results.Add(writer, false);
+                }
+            }
+
+            return results;
+        }
+
+        /// <summary>
+        /// Use this to add any amount of logs to the logger. The given priority is the minimum priority required for that log.
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="priority"></param>
+        public void AddWriter(IWriter writer, LogPriority priority)
+        {
+            if (Writers != null)
+                Writers.Add(writer, priority);
         }
 
         /// <summary>
@@ -47,17 +78,17 @@ namespace ayayaa.logging
         {
             switch (priority)
             {
-                case LogPriority.Low:
-                    return string.Format("[{0}] {1}", "LOW", message);
+                case LogPriority.Trace:
+                    return string.Format("[{0}] {1}", "TRACE", message);
+                case LogPriority.Debug:
+                    return string.Format("[{0}] {1}", "DEBUG", message);
+                case LogPriority.Info:
+                    return string.Format("[{0}] {1}", "INFO", message);
                 case LogPriority.Warning:
-                    return string.Format("[{0}] {1}", "WAR", message);
-                case LogPriority.Medium:
-                    return string.Format("[{0}] {1}", "MED", message);
-                case LogPriority.High:
-                    return string.Format("[{0}] {1}", "HIGH", message);
-                case LogPriority.Exception:
+                    return string.Format("[{0}] {1}", "WARNING", message);
+                case LogPriority.Error:
                     return string.Format("[{0}] {1}", "ERROR", message);
-                case LogPriority.EverythingIsOnFire:
+                case LogPriority.FIRE:
                     return string.Format("[{0}] {1}", "FIRE", message);
                 default:
                     return string.Format("{0}", message);
