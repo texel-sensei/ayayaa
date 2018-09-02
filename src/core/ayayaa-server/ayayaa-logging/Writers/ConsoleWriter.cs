@@ -8,34 +8,21 @@ namespace ayayaa.logging.Writers
 {
     public class ConsoleWriter : IWriter
     {
-        public bool WriteMessage(string text, LogPriority priority)
+        public ConsoleWriter()
         {
-            string formattedText = FormMessage(text, priority);
-            Message = formattedText;
-            return Write(formattedText);
+            // For a console writer, no outside data is required.
         }
 
-        public object Message { get; private set; }
-
-        private string FormMessage(string message, LogPriority priority)
+        public void WriteMessage(string text)
         {
-            switch (priority)
-            {
-                case LogPriority.Low:
-                    return string.Format("{0} - {1}", "LOW", message);
-                case LogPriority.Warning:
-                    return string.Format("{0} - {1}", "WAR", message);
-                case LogPriority.Medium:
-                    return string.Format("{0} - {1}", "MED", message);
-                case LogPriority.High:
-                    return string.Format("{0} - {1}", "HIGH", message);
-                case LogPriority.Exception:
-                    return string.Format("{0} - {1}", "ERROR", message);
-                case LogPriority.EverythingIsOnFire:
-                    return string.Format("{0} - {1}", "FIRE", message);
-                default:
-                    return string.Format("{0}", message);
-            }
+            string fText = SerializeMessage(text) as string;
+            Write(fText);
+        }
+
+        public object SerializeMessage(string message)
+        {
+            // Message does not need to be converted into a specific format for the console.
+            return message;
         }
 
         /// <summary>
@@ -43,16 +30,15 @@ namespace ayayaa.logging.Writers
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        private bool Write(string text)
+        public void Write(object text)
         {
             try
             {
                 Console.WriteLine(text);
-                return true;
             }
-            catch (Exception ex)
+            catch
             {
-                return false;
+                throw new LoggerException();
             }
         }
     }

@@ -11,13 +11,20 @@ namespace ayayaa.logging.Interfaces
         /// Takes the given text and priority, formats it into a proper message for the given writer and finally logs it.
         /// </summary>
         /// <param name="text"></param>
-        /// <param name="priority"></param>
         /// <returns></returns>
-        bool WriteMessage(string text, LogPriority priority);
+        void WriteMessage(string text);
 
         /// <summary>
-        /// The final message that gets sent after calling WriteMessage(). Used for testing purposes.
+        /// Internal use only. This function converts the message into a value that's usable to the writer.
+        /// (e.g. byte[] for sending it to a remote host.)
         /// </summary>
-        object Message { get; }
+        /// <param name="message"></param>
+        object SerializeMessage(string message);
+
+        /// <summary>
+        /// Internal use only. Performs the actual writing.
+        /// </summary>
+        /// <param name="message"></param>
+        void Write(object message);
     }
 }
