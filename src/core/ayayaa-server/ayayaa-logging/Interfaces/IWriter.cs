@@ -11,13 +11,7 @@ namespace ayayaa.logging.Interfaces
         /// Takes the given text and priority, formats it into a proper message for the given writer and finally logs it.
         /// </summary>
         /// <param name="text"></param>
-        /// <param name="priority"></param>
         /// <returns></returns>
-        bool WriteMessage(string text, LogPriority priority);
-
-        /// <summary>
-        /// The final message that gets sent after calling WriteMessage(). Used for testing purposes.
-        /// </summary>
-        object Message { get; }
+        void WriteMessage(string text);
     }
 }

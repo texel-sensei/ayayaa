@@ -10,11 +10,11 @@ namespace ayayaa.logging.Enums
     /// </summary>
     public enum LogPriority
     {
-        Low = 1,
-        Warning = 2,
-        Medium = 3,
-        High = 4,
-        Exception = 5,
-        EverythingIsOnFire = 6
+        Trace = 1,
+        Debug = 2,
+        Info = 3,
+        Warning = 4,
+        Error = 5,
+        FIRE = 6
     }
 }

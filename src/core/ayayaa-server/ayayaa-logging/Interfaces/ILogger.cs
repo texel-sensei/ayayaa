@@ -7,8 +7,10 @@ namespace ayayaa.logging.Interfaces
 {
     public interface ILogger
     {
-        LogType LoggingType { get; }
-        IWriter Writer { get; }
-        bool WriteToLog(string message, LogPriority priority);
+        Dictionary<IWriter, LogPriority> Writers { get; }
+
+        void AddWriter(IWriter writer, LogPriority priority);
+        void WriteToLog(string message, LogPriority priority, IWriter log);
+        Dictionary<IWriter, bool> WriteToLogs(string message, LogPriority priority);
     }
 }
