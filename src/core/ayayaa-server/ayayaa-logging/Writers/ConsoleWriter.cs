@@ -6,31 +6,27 @@ using System.Text;
 
 namespace ayayaa.logging.Writers
 {
-    public class ConsoleWriter : IWriter
+    public class ConsoleWriter : Writer
     {
         public ConsoleWriter()
         {
             // For a console writer, no outside data is required.
         }
 
-        public void WriteMessage(string text)
+        public override void WriteMessage(string text)
         {
             string fText = SerializeMessage(text) as string;
             Write(fText);
         }
 
-        private object SerializeMessage(string message)
+        protected override object SerializeMessage(string message)
         {
             // Message does not need to be converted into a specific format for the console.
             return message;
         }
 
-        /// <summary>
-        /// Performs the actual writing act.
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        private void Write(object text)
+
+        protected override void Write(object text)
         {
             try
             {

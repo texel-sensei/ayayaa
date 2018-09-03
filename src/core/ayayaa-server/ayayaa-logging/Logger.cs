@@ -16,6 +16,9 @@ namespace ayayaa.logging
 
         public Dictionary<IWriter, LogPriority> Writers { get; }
 
+
+        #region Public Functions
+
         /// <summary>
         /// Writes the given message to the given log. This function does not check minimum priority of the given log.
         /// </summary>
@@ -68,6 +71,10 @@ namespace ayayaa.logging
                 Writers.Add(writer, priority);
         }
 
+        #endregion
+
+        #region Private Functions
+
         /// <summary>
         /// Internal use only. Takes the incoming message and gives it a proper format for our log.
         /// </summary>
@@ -94,5 +101,7 @@ namespace ayayaa.logging
                     return string.Format("{0}", message);
             }
         }
+
+        #endregion
     }
 }
