@@ -19,7 +19,7 @@ namespace ayayaa.logging.Writers
             Write(fText);
         }
 
-        public object SerializeMessage(string message)
+        private object SerializeMessage(string message)
         {
             // Message does not need to be converted into a specific format for the console.
             return message;
@@ -30,7 +30,7 @@ namespace ayayaa.logging.Writers
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        public void Write(object text)
+        private void Write(object text)
         {
             try
             {

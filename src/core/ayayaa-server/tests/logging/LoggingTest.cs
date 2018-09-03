@@ -14,31 +14,6 @@ namespace tests.logging
         private readonly Logger logger = new Logger();
 
         [Fact]
-        private void FormatMessage()
-        {
-            string message = "This is a test message.";
-            string fMessage = string.Empty;
-
-            fMessage = logger.FormatEntry(message, LogPriority.Trace);
-            Assert.Equal("[TRACE] This is a test message.", fMessage);
-
-            fMessage = logger.FormatEntry(message, LogPriority.Debug);
-            Assert.Equal("[DEBUG] This is a test message.", fMessage);
-
-            fMessage = logger.FormatEntry(message, LogPriority.Info);
-            Assert.Equal("[INFO] This is a test message.", fMessage);
-
-            fMessage = logger.FormatEntry(message, LogPriority.Warning);
-            Assert.Equal("[WARNING] This is a test message.", fMessage);
-
-            fMessage = logger.FormatEntry(message, LogPriority.Error);
-            Assert.Equal("[ERROR] This is a test message.", fMessage);
-
-            fMessage = logger.FormatEntry(message, LogPriority.FIRE);
-            Assert.Equal("[FIRE] This is a test message.", fMessage);
-        }
-
-        [Fact]
         private void WriteToLogs()
         {
             // Arrange
@@ -92,27 +67,5 @@ namespace tests.logging
             Assert.True(result6[writer2]);
             Assert.True(result6[writer3]);
         }
-    }
-
-    public class ConsoleWriterTest
-    {
-        internal ConsoleWriter writer => new ConsoleWriter();
-
-        [Fact]
-        public void SerializeMessage()
-        {
-            // Arrange
-            string message = "[ERROR] Failure to tag image #12.";
-            string fMessage = string.Empty;
-
-            // Act
-            fMessage = writer.SerializeMessage(message) as string;
-
-            // Assert
-            Assert.Equal(message, fMessage);
-        }
-
-        // No need to test the Write-function for the ConsoleLogger as it is literally too simply to fail. 
-        // Trust me, I tried.
     }
 }

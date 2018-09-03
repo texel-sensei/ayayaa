@@ -74,7 +74,7 @@ namespace ayayaa.logging
         /// <param name="message"></param>
         /// <param name="priority"></param>
         /// <returns></returns>
-        public string FormatEntry(string message, LogPriority priority)
+        private string FormatEntry(string message, LogPriority priority)
         {
             switch (priority)
             {

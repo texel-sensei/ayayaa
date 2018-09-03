@@ -12,6 +12,5 @@ namespace ayayaa.logging.Interfaces
         void AddWriter(IWriter writer, LogPriority priority);
         void WriteToLog(string message, LogPriority priority, IWriter log);
         Dictionary<IWriter, bool> WriteToLogs(string message, LogPriority priority);
-        string FormatEntry(string message, LogPriority priority);
     }
 }
