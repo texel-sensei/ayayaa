@@ -39,7 +39,6 @@ namespace ayayaa
             Storage = new FileStorage(new DiskFileSystem(), path);
             using (var connection = new NancyConnection())
             {
-                NancyConnection.Storage = Storage;
                 new Program().DoLoop(connection);
             }
         }
