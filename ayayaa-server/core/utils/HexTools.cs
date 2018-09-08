@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ayayaa.utils
 {
-    internal static class HexTools
+    public static class HexTools
     {
         public static string ByteArrayToHexString(byte[] bytes)
         {

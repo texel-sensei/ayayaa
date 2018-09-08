@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>ayayaa.file_storage</AssemblyName>
+    <RootNamespace>ayayaa.file_storage</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\core\core.csproj" />
+  </ItemGroup>
+
+</Project>

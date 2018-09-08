@@ -2,8 +2,8 @@
 VERSION="$1"
 echo $VERSION
 
-SRC_FOLDER=src/core/ayayaa-server/
-PROJECT=$SRC_FOLDER/ayayaa-server/ayayaa-server.csproj
+SRC_FOLDER=ayayaa-server/
+PROJECT=$SRC_FOLDER/server/server.csproj
 
 FOLDER_NAME="ayayaa-server-$VERSION"
 RELEASE_FOLDER=$(pwd)/$FOLDER_NAME

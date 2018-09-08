@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>ayayaa-message_handling</AssemblyName>
+    <RootNamespace>ayayaa-message_handling</RootNamespace>
+  </PropertyGroup>
+
+</Project>
