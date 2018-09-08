@@ -34,7 +34,6 @@ namespace ayayaa.logging
             IsRunning = true;
 
             listener = new TcpListener(ip, port);
-            Console.WriteLine("Listening...");
 
             TcpClient client = null;
 
@@ -57,11 +56,9 @@ namespace ayayaa.logging
 
                     // Convert data into string...
                     string dataReceived = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                    Console.WriteLine("Received : " + dataReceived);
 
                     // Sending answer to client
-                    Console.WriteLine("Sending back : " + dataReceived);
-                    nwStream.Write(buffer, 0, bytesRead);
+                    //nwStream.Write(buffer, 0, bytesRead);
 
                     // Getting LogPriority from data
                     LogPriority priority;
@@ -89,7 +86,6 @@ namespace ayayaa.logging
                             priority = LogPriority.Info;
                             break;
                     }
-
 
                     // Writing received data to local logs
                     LocalLogger.WriteToLogs(dataReceived, priority);

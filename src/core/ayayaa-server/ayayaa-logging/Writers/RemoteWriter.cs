@@ -17,7 +17,7 @@ namespace ayayaa.logging.Writers
 
         private int port = -1;
         private string serverIP = null;
-        private string comparisonMessage = string.Empty;
+        //private string comparisonMessage = string.Empty;
 
         public override void WriteMessage(string text)
         {
@@ -32,7 +32,7 @@ namespace ayayaa.logging.Writers
             message = string.Format("[{0}] {1}", DateTime.Now.ToString("s"), message);
 
             // Save the formatted message for comparison with the server.
-            comparisonMessage = message;
+            //comparisonMessage = message;
 
             // Probably unncessary, but just in case convert the string from whatever encoding we got to UTF8.
             // That way we can be sure that our logs don't have weird symbols in it.
@@ -54,19 +54,18 @@ namespace ayayaa.logging.Writers
                 NetworkStream nwStream = client.GetStream();
 
                 // Send text...
-                Console.WriteLine("Sending : " + comparisonMessage);
                 nwStream.Write(data, 0, data.Length);
 
                 // Receive answer...
-                byte[] bytesToRead = new byte[client.ReceiveBufferSize];
-                int bytesRead = nwStream.Read(bytesToRead, 0, client.ReceiveBufferSize);
-                string answer = Encoding.UTF8.GetString(bytesToRead, 0, bytesRead);
+                //byte[] bytesToRead = new byte[client.ReceiveBufferSize];
+                //int bytesRead = nwStream.Read(bytesToRead, 0, client.ReceiveBufferSize);
+                //string answer = Encoding.UTF8.GetString(bytesToRead, 0, bytesRead);
 
                 // Comparing received with sent message...
-                if (answer != comparisonMessage)
-                {
-                    throw new LoggerException("An error occured during confirmation in RemoteWriter. Please check that the received and sent message are identical.");
-                }
+                //if (answer != comparisonMessage)
+                //{
+                //    throw new LoggerException("An error occured during confirmation in RemoteWriter. Please check that the received and sent message are identical.");
+                //}
             }
             catch(Exception ex) when (ex.GetType() != typeof(LoggerException))
             {
