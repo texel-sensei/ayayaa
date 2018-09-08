@@ -32,7 +32,7 @@ namespace ayayaa.logging.Writers
             {
                 Console.WriteLine(text);
             }
-            catch
+            catch(Exception ex)
             {
                 throw new LoggerException();
             }

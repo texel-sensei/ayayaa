@@ -97,7 +97,7 @@ namespace ayayaa.logging
                 catch (Exception ex)
                 {
                     IsRunning = false;
-                    throw new LoggerException("An error occured during the receiving of client messages in the LoggingServer.");
+                    throw new LoggerException("An error occured during the receiving of client messages in the LoggingServer.", ex);
                 }
                 finally
                 {

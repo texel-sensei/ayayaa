@@ -39,7 +39,7 @@ namespace ayayaa.logging.Writers
             }
             catch (Exception ex)
             {
-                throw new LoggerException("An error occured while serializing message in FileLogger.");
+                throw new LoggerException("An error occured while serializing message in FileLogger.", ex);
             }
             
         }
@@ -55,7 +55,7 @@ namespace ayayaa.logging.Writers
             }
             catch (Exception ex)
             {
-                throw new LoggerException("An error occured while writing message into file in FileLogger.");
+                throw new LoggerException("An error occured while writing message into file in FileLogger.", ex);
             }
         }
     }

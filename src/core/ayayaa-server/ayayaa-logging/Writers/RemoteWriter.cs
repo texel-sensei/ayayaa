@@ -68,9 +68,9 @@ namespace ayayaa.logging.Writers
                     throw new LoggerException("An error occured during confirmation in RemoteWriter. Please check that the received and sent message are identical.");
                 }
             }
-            catch(Exception ex)
+            catch(Exception ex) when (ex.GetType() != typeof(LoggerException))
             {
-                throw new LoggerException("An error occured while sending log message to the server in RemoteWriter.");
+                throw new LoggerException("An error occured while sending log message to the server in RemoteWriter.", ex);
             }
             finally
             {
