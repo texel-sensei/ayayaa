@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ayayaa-server": {
+      "commandName": "Project",
+      "commandLineArgs": "T:\\images"
+    }
+  }
+}
