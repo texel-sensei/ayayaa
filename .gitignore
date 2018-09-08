@@ -111,3 +111,6 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# files that start with . are usually fine to ignore
+.*
