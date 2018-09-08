@@ -131,7 +131,7 @@ namespace tests.logging
 
     public class RemoteLoggerTest
     {
-        private readonly LoggingServer server = new LoggingServer("127.0.0.1", 5000);
+        private readonly LoggingServer server = new LoggingServer("0000", 5000);
         private readonly Logger logger = new Logger();
 
         [Fact]
