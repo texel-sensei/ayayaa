@@ -109,3 +109,7 @@ ENV/
 
 # files that start with . are usually fine to ignore
 .*
+
+# ignore build folders
+obj/
+debug/

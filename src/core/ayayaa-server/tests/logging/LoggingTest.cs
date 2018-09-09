@@ -131,48 +131,52 @@ namespace tests.logging
 
     public class RemoteLoggerTest
     {
-        private readonly LoggingServer server = new LoggingServer("0000", 5000);
         private readonly Logger logger = new Logger();
 
         [Fact]
         private void WriteToLogs()
         {
             // Arrange
-            string message = "Logging works as expected.";
+            using (LoggingServer server = new LoggingServer("0000", 5000))
+            {
 
-            LogPriority priority1 = LogPriority.Trace;
-            LogPriority priority2 = LogPriority.Debug;
-            LogPriority priority3 = LogPriority.Info;
-            LogPriority priority4 = LogPriority.Warning;
-            LogPriority priority5 = LogPriority.Error;
-            LogPriority priority6 = LogPriority.FIRE;
 
-            server.LocalLogger.AddWriter(new FileWriter("E:\\Programming\\Tests and Temp\\ServerLog1"), LogPriority.Trace);
-            server.LocalLogger.AddWriter(new FileWriter("E:\\Programming\\Tests and Temp\\ServerLog2"), LogPriority.Info);
+                string message = "Logging works as expected.";
 
-            RemoteWriter writer = new RemoteWriter("127.0.0.1", 5000);
+                LogPriority priority1 = LogPriority.Trace;
+                LogPriority priority2 = LogPriority.Debug;
+                LogPriority priority3 = LogPriority.Info;
+                LogPriority priority4 = LogPriority.Warning;
+                LogPriority priority5 = LogPriority.Error;
+                LogPriority priority6 = LogPriority.FIRE;
 
-            logger.AddWriter(writer, LogPriority.Trace);
-            server.StartLogging();
+                server.LocalLogger.AddWriter(new FileWriter("E:\\Programming\\Tests and Temp\\ServerLog1"), LogPriority.Trace);
+                server.LocalLogger.AddWriter(new FileWriter("E:\\Programming\\Tests and Temp\\ServerLog2"), LogPriority.Info);
 
-            // Act
-            Dictionary<IWriter, bool> result1 = logger.WriteToLogs(message, priority1);
-            Dictionary<IWriter, bool> result2 = logger.WriteToLogs(message, priority2);
-            Dictionary<IWriter, bool> result3 = logger.WriteToLogs(message, priority3);
-            Dictionary<IWriter, bool> result4 = logger.WriteToLogs(message, priority4);
-            Dictionary<IWriter, bool> result5 = logger.WriteToLogs(message, priority5);
-            Dictionary<IWriter, bool> result6 = logger.WriteToLogs(message, priority6);
+                RemoteWriter writer = new RemoteWriter("127.0.0.1", 5000);
 
-            // Cleanup
-            server.StopLogging();
+                logger.AddWriter(writer, LogPriority.Trace);
+                server.StartLogging();
 
-            // Assert
-            Assert.True(result1[writer]);
-            Assert.True(result2[writer]);
-            Assert.True(result3[writer]);
-            Assert.True(result4[writer]);
-            Assert.True(result5[writer]);
-            Assert.True(result6[writer]);
+                // Act
+                Dictionary<IWriter, bool> result1 = logger.WriteToLogs(message, priority1);
+                Dictionary<IWriter, bool> result2 = logger.WriteToLogs(message, priority2);
+                Dictionary<IWriter, bool> result3 = logger.WriteToLogs(message, priority3);
+                Dictionary<IWriter, bool> result4 = logger.WriteToLogs(message, priority4);
+                Dictionary<IWriter, bool> result5 = logger.WriteToLogs(message, priority5);
+                Dictionary<IWriter, bool> result6 = logger.WriteToLogs(message, priority6);
+
+                // Cleanup
+                server.StopLogging();
+
+                // Assert
+                Assert.True(result1[writer]);
+                Assert.True(result2[writer]);
+                Assert.True(result3[writer]);
+                Assert.True(result4[writer]);
+                Assert.True(result5[writer]);
+                Assert.True(result6[writer]);
+            }
         }
     }
 }

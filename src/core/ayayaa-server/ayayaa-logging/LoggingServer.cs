@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace ayayaa.logging
 {
-    public class LoggingServer
+    public class LoggingServer : IDisposable
     {
         public LoggingServer(string ip, int port) 
         {
@@ -18,15 +18,18 @@ namespace ayayaa.logging
             IPAddress.TryParse(ip, out this.ip);
         }
 
+
         public Logger LocalLogger { get; set; }
         public bool IsRunning { get; private set; }
 
+
         private int port = -1;
         private IPAddress ip = null;
-        private Thread loggingThread = null;
+        private CancellationTokenSource ctSource;
         private TcpListener listener = null;
 
-        private bool DoLogging()
+
+        private bool DoLogging(CancellationToken cToken)
         {
             if (ip == null || port == -1)
                 return false;
@@ -46,6 +49,12 @@ namespace ayayaa.logging
                 {
                     // Client has been found, connecting...
                     client = listener.AcceptTcpClient();
+
+                    // If the Server is being disposed break out of the thread. 
+                    if (cToken.IsCancellationRequested)
+                    {
+                        break;
+                    }
 
                     // Receiving data and buffering them...
                     NetworkStream nwStream = client.GetStream();
@@ -109,14 +118,16 @@ namespace ayayaa.logging
             return true;
         }
 
+
         public void StartLogging()
         {
             if (IsRunning)
                 return;
 
+            ctSource = new CancellationTokenSource();
+
             IsRunning = true;
-            loggingThread = new Thread(() => DoLogging());
-            loggingThread.Start();
+            new Thread(() => DoLogging(ctSource.Token)).Start();
         }
 
         public void StopLogging()
@@ -124,6 +135,22 @@ namespace ayayaa.logging
             IsRunning = false;
             if (listener != null)
                 listener.Server.Close();
+        }
+
+        public void Dispose()
+        {
+            // Stop the listener from listening, thus allowing the subthread to finish manually.
+            StopLogging();
+
+            // In case the subthread didn't finish properly, murder it.
+            if (ctSource != null)
+            {
+                ctSource.Cancel();
+            }
+
+            // Dispose of the remaining resources.
+            this.listener = null;
+            this.LocalLogger = null;
         }
     }
 }
