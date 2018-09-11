@@ -36,5 +36,20 @@ namespace ayayaa.logging
         {
             logger.WriteToLogs(message, LogPriority.FIRE);
         }
+
+        public static void LogThis(this Exception ex)
+        {
+            Logger exLogger = LoggingHelper.FindLogger("EX");
+            if (exLogger != null)
+            {
+                exLogger.WriteToLogs(ex.Message, LogPriority.Error);
+                exLogger.WriteToLogs(ex.StackTrace, LogPriority.Error);
+
+                if (ex.InnerException != null)
+                {
+                    exLogger.WriteToLogs(ex.InnerException.Message, LogPriority.Error);
+                }
+            }
+        }
     }
 }

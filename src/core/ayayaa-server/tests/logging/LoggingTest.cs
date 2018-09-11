@@ -9,6 +9,31 @@ using Xunit;
 
 namespace tests.logging
 {
+    public class GeneralLoggerTest
+    {
+        [Fact]
+        private void ExceptionLoggerTest()
+        {
+            // Arrange
+            LoggingHelper.Initialize();
+            bool success = false;
+
+            // Act
+            try
+            {
+                new NullReferenceException().LogThis();
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                success = false;
+            }
+
+            // Assert
+            Assert.True(success);
+        }
+    }
+
     public class ConsoleLoggerTest
     {
         private readonly Logger logger = new Logger();
