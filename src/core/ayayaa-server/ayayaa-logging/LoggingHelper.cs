@@ -21,12 +21,12 @@ namespace ayayaa.logging
 
         private static void CreateDefaultLoggers()
         {
-            // Pretty much every Project needs logging for exceptions and it allows us to create an exception extension later on.
-            CreateExceptionLogger();
-
-            // ...
+            // Create whatever Loggers you want for your project here.
         }
 
+        /// <summary>
+        /// Example for an exception logger.
+        /// </summary>
         private static void CreateExceptionLogger()
         {
             Logger exceptionLogger = new Logger();
@@ -47,9 +47,6 @@ namespace ayayaa.logging
         /// <summary>
         /// Add a logger to the Helpers collection.
         /// </summary>
-        /// <param name="tag"></param>
-        /// <param name="logger"></param>
-        /// <returns>Success</returns>
         public static bool AddLogger(string tag, Logger logger)
         {
             if (Loggers == null)
@@ -68,8 +65,6 @@ namespace ayayaa.logging
         /// <summary>
         /// Removes the logger with the given tag from the collection.
         /// </summary>
-        /// <param name="tag"></param>
-        /// <returns>Success</returns>
         public static bool RemoveLogger(string tag)
         {
             if (Loggers == null)
@@ -87,8 +82,6 @@ namespace ayayaa.logging
         /// <summary>
         /// Finds and returns the logger with the given tag.
         /// </summary>
-        /// <param name="tag"></param>
-        /// <returns>Logger</returns>
         public static Logger FindLogger(string tag)
         {
             if (Loggers == null)
@@ -105,8 +98,6 @@ namespace ayayaa.logging
         /// <summary>
         /// Writes given message to all Logs contained in the Logger with the given tag.
         /// </summary>
-        /// <param name="tag"></param>
-        /// <param name="message"></param>
         public static void WriteToLog(string tag, string message)
         {
             if (Loggers == null)
@@ -120,7 +111,6 @@ namespace ayayaa.logging
         /// <summary>
         /// Writes given message to all Logs.
         /// </summary>
-        /// <param name="message"></param>
         public static void WriteToLogs(string message)
         {
             foreach (string key in Loggers.Keys)

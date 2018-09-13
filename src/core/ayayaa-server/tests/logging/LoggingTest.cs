@@ -11,27 +11,7 @@ namespace tests.logging
 {
     public class GeneralLoggerTest
     {
-        [Fact]
-        private void ExceptionLoggerTest()
-        {
-            // Arrange
-            LoggingHelper.Initialize();
-            bool success = false;
 
-            // Act
-            try
-            {
-                new NullReferenceException().LogThis();
-                success = true;
-            }
-            catch (Exception ex)
-            {
-                success = false;
-            }
-
-            // Assert
-            Assert.True(success);
-        }
     }
 
     public class ConsoleLoggerTest
@@ -111,9 +91,11 @@ namespace tests.logging
             LogPriority priority5 = LogPriority.Error;
             LogPriority priority6 = LogPriority.FIRE;
 
-            FileWriter writer1 = new FileWriter("E:\\Programming\\Tests and Temp\\Log1.txt");
-            FileWriter writer2 = new FileWriter("E:\\Programming\\Tests and Temp\\Log2.config");
-            FileWriter writer3 = new FileWriter("E:\\Programming\\Tests and Temp\\Log3.ini");
+            string path = System.IO.Path.GetTempPath();
+
+            FileWriter writer1 = new FileWriter(path + "\\Log1.txt");
+            FileWriter writer2 = new FileWriter(path + "\\Log2.config");
+            FileWriter writer3 = new FileWriter(path + "\\Log3.ini");
 
             logger.AddWriter(writer1, LogPriority.Trace);
             logger.AddWriter(writer2, LogPriority.Info);

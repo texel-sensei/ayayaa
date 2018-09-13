@@ -12,15 +12,11 @@ namespace ayayaa.logging.Writers
         /// <summary>
         /// Takes the given message and serializes it into the required format for the writer.
         /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
         protected abstract object SerializeMessage(string message);
 
         /// <summary>
         /// Performs the actual writing act.
         /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
         protected abstract void Write(object text);
     }
 }
