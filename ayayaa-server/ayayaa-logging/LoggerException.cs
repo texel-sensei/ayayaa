@@ -9,5 +9,7 @@ namespace ayayaa.logging
         public LoggerException() : base("A failure occured during the logging process.") { }
 
         public LoggerException(string message) : base(message) { }
+
+        public LoggerException(string message, Exception innerException) : base(message, innerException) { }
     }
 }
