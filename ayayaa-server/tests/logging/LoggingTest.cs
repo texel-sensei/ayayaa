@@ -173,9 +173,6 @@ namespace tests.logging
                 Dictionary<IWriter, bool> result5 = logger.WriteToLogs(message, priority5);
                 Dictionary<IWriter, bool> result6 = logger.WriteToLogs(message, priority6);
 
-                // Cleanup
-                server.StopLogging();
-
                 // Assert
                 Assert.True(result1[writer]);
                 Assert.True(result2[writer]);

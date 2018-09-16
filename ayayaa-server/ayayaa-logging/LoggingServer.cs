@@ -27,6 +27,7 @@ namespace ayayaa.logging
         private IPAddress ip = null;
         private CancellationTokenSource ctSource;
         private TcpListener listener = null;
+        TcpClient client = null;
 
 
         private bool DoLogging(CancellationToken cToken)
@@ -37,8 +38,6 @@ namespace ayayaa.logging
             IsRunning = true;
 
             listener = new TcpListener(ip, port);
-
-            TcpClient client = null;
 
             // Listen for incoming requests...
             listener.Start();
@@ -101,8 +100,26 @@ namespace ayayaa.logging
                 }
                 catch (Exception ex)
                 {
-                    IsRunning = false;
-                    throw new LoggerException("An error occured during the receiving of client messages in the LoggingServer.", ex);
+                    if (ex is SocketException)
+                    {
+                        SocketException sex = ex as SocketException;    // :smug:
+                        if (sex.ErrorCode == 10004)
+                        {
+                            // This specific exception is called by .NET when you cancel a listener from a different thread.
+                            // There might be a way to prevent it, but looking on StackOverflow & co recommends just handling the exception.
+                            IsRunning = false;
+                        }
+                        else
+                        {
+                            IsRunning = false;
+                            throw new LoggerException("An error occured during the receiving of client messages in the LoggingServer.", sex);
+                        }
+                    }
+                    else
+                    {
+                        IsRunning = false;
+                        throw new LoggerException("An error occured during the receiving of client messages in the LoggingServer.", ex);
+                    }
                 }
                 finally
                 {
