@@ -20,7 +20,8 @@ namespace ayayaa.logging
 
 
         public Logger LocalLogger { get; set; }
-        public bool IsRunning { get; private set; }
+        private volatile bool isRunning;
+        public bool IsRunning { get { return isRunning; } }
 
 
         private int port = -1;
@@ -35,7 +36,7 @@ namespace ayayaa.logging
             if (ip == null || port == -1)
                 return false;
 
-            IsRunning = true;
+            isRunning = true;
 
             listener = new TcpListener(ip, port);
 
@@ -50,8 +51,11 @@ namespace ayayaa.logging
                     client = listener.AcceptTcpClient();
 
                     // If the Server is being disposed break out of the thread. 
-                    if (cToken.IsCancellationRequested)
+                    if (!isRunning)
                     {
+                        if (client != null)
+                            client.Close();
+
                         break;
                     }
 
@@ -107,17 +111,17 @@ namespace ayayaa.logging
                         {
                             // This specific exception is called by .NET when you cancel a listener from a different thread.
                             // There might be a way to prevent it, but looking on StackOverflow & co recommends just handling the exception.
-                            IsRunning = false;
+                            isRunning = false;
                         }
                         else
                         {
-                            IsRunning = false;
+                            isRunning = false;
                             throw new LoggerException("An error occured during the receiving of client messages in the LoggingServer.", sex);
                         }
                     }
                     else
                     {
-                        IsRunning = false;
+                        isRunning = false;
                         throw new LoggerException("An error occured during the receiving of client messages in the LoggingServer.", ex);
                     }
                 }
@@ -143,27 +147,27 @@ namespace ayayaa.logging
 
             ctSource = new CancellationTokenSource();
 
-            IsRunning = true;
+            isRunning = true;
             new Thread(() => DoLogging(ctSource.Token)).Start();
         }
 
         public void StopLogging()
         {
-            IsRunning = false;
+            isRunning = false;
             if (listener != null)
                 listener.Server.Close();
         }
 
         public void Dispose()
         {
-            // Stop the listener from listening, thus allowing the subthread to finish manually.
-            StopLogging();
-
-            // In case the subthread didn't finish properly, murder it.
+            // Tell the subthread to stop.
             if (ctSource != null)
             {
                 ctSource.Cancel();
             }
+
+            // Stop the listener from listening, thus allowing the subthread to finish manually.
+            StopLogging();
 
             // Dispose of the remaining resources.
             this.listener = null;
