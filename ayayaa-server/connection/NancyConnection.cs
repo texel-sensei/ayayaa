@@ -7,7 +7,6 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using ayayaa.file_storage;
 using ayayaa.message_handling;
 using Nancy;
 using Nancy.Extensions;
@@ -22,27 +21,11 @@ namespace ayayaa.connection
     {
         private NancyHost _host;
         private static HandleConnection _handler;
-        public static FileStorage Storage;
 
         public NancyConnection()
         {
             Post("/api/", async args => await WaitConnection(args));
             Post("/api/{cmd}/", async args => await WaitConnection(args));
-            Get("/api/image/{hash}.{ext}/", args => GetImage(args));
-        }
-
-        private Response GetImage(dynamic args)
-        {
-            if (!Storage.Exists(args.hash, $".{args.ext}"))
-            {
-                return 404;
-            }
-
-            var imageStream = new MemoryStream();
-            byte[] data = Storage.LoadData(args.hash, args.ext);
-            imageStream.Write(data, 0, data.Length);
-            imageStream.Seek(0,SeekOrigin.Begin);
-            return Response.FromStream(imageStream, $"image/{args.ext}");
         }
 
         public void Bind(int port)

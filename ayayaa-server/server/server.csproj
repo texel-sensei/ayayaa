@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RootNamespace>ayayaa.server</RootNamespace>
+    <AssemblyName>ayayaa-server</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Handlers\UnknowCommandHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\connection\connection.csproj" />
+    <ProjectReference Include="..\core\core.csproj" />
+    <ProjectReference Include="..\file_storage\file_storage.csproj" />
+    <ProjectReference Include="..\message_handling\message_handling.csproj" />
+  </ItemGroup>
+</Project>

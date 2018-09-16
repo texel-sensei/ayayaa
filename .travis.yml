@@ -1,6 +1,6 @@
 language: csharp
 
-solution: src/core/ayayaa-server/ayayaa-server.sln
+solution: ayayaa-server/ayayaa-server.sln
 mono: none
 dotnet: 2.0.0
 

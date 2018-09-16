@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 
 namespace ayayaa.file_storage
 {
-    class DiskFileSystem : IFileSystem
+    public class DiskFileSystem : IFileSystem
     {
         public bool Exists(string path)
         {
