@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "message_handling", "message
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ayayaa-logging", "ayayaa-logging\ayayaa-logging.csproj", "{540144AA-6EF0-422F-9239-810146350597}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "database", "database\database.csproj", "{E4713421-0F62-4BB6-B98C-565BB2A678ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "database", "database\database.csproj", "{E4713421-0F62-4BB6-B98C-565BB2A678ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

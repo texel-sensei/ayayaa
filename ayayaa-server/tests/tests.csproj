@@ -12,6 +12,7 @@
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\database\database.csproj" />
     <ProjectReference Include="..\server\server.csproj" />
     <ProjectReference Include="..\ayayaa-logging\ayayaa-logging.csproj" />
   </ItemGroup>

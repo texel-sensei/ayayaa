@@ -1,6 +1,4 @@
-﻿using ayayaa.database.Core;
-
-using ayayaa.logging;
+﻿using ayayaa.logging;
 using ayayaa.logging.Enums;
 using ayayaa.logging.Writers;
 
@@ -13,46 +11,36 @@ using System.Text;
 
 namespace ayayaa.database.SQLite
 {
-    public class SQLiteDB : IAyayaaDB
+    public class SQLiteDB
     {
-        public SQLiteDB(string connectionString)
+        public SQLiteDB(string filePath)
         {
-            connection = new SQLiteConnection(connectionString);
+            System.Data.SQLite.SQLiteConnectionStringBuilder builder = new SQLiteConnectionStringBuilder();
+            builder.DataSource = filePath;
+            Connection = new SQLiteConnection(builder.ConnectionString);
         }
 
-        private SQLiteConnection connection;
-        public DbConnection Connection
-        {
-            get { return connection; }
-        }
 
+        public SQLiteConnection Connection { get; }
 
         public bool CreateDefaultDB()
         {
-            if (connection == null)
+            if (Connection == null)
                 return false;
 
             bool result = false;
 
             try
             {
-                connection.Open();
+                Connection.Open();
 
-                using (SQLiteCommand cmd = new SQLiteCommand(connection))
+                using (SQLiteCommand cmd = new SQLiteCommand(Connection))
                 {
                     using (SQLiteTransaction transaction = cmd.Connection.BeginTransaction())
                     {
                         // Create Table Test
                         cmd.CommandText = Scripts.SQLiteScripts.CREATE_TABLE_TEST;
                         cmd.ExecuteNonQuery();
-
-                        // Create table X
-                        //cmd.CommandText = Scripts.SQLiteScripts.CREATE_TABLE_X;
-                        //cmd.ExecuteNonQuery();
-
-                        // Create table Y
-                        //cmd.CommandText = Scripts.SQLiteScripts.CREATE_TABLE_Y;
-                        //cmd.ExecuteNonQuery();
 
                         // Insert data for table test
                         for (int i = 0; i < 10; i++)
@@ -75,7 +63,7 @@ namespace ayayaa.database.SQLite
             }
             finally
             {
-                connection.Close();
+                Connection.Close();
             }
 
             return result;
